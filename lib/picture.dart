@@ -1,3 +1,5 @@
+import 'package:firebase_ml/ml.dart';
+import 'package:firebase_ml/result_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:camera/camera.dart';
@@ -25,7 +27,18 @@ class PictureScreen extends StatelessWidget {
           Row(
             children: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  final image = File(picture!.path);
+                  MLHelper helper = MLHelper();
+                  helper.textFromImage(image).then((result) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ResultScreen(result),
+                      ),
+                    );
+                  });
+                },
                 child: const Text('Text Recognition'),
               ),
             ],
